@@ -21,7 +21,21 @@ func getAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, albums)
 }
 
+// 신기한점 : 별도의 body 인자를 전달받지 않고 ctx.BindJson 으로 body 데이터를 json 파싱한다.
+func postAlbums(c *gin.Context) {
+	var newAlbum album // 전달 받을 body
 
+	// context 로 넘어온 body 데이터와 newAlbum 을 json 으로 파싱
+	if err := c.BindJSON(&newAlbum); err != nil {
+			return
+	}
+
+	// 메모리 디비로 사용중인 albums 에 post 요청으로 들어온 newAlbum 데이터 추가 (메모리 DB 업데이트)
+	albums = append(albums, newAlbum)
+
+	// response 반환. statusCode 와 newAlbum 데이터 반환
+	c.IndentedJSON(http.StatusCreated, newAlbum)
+}
 
 
 func main() {
@@ -35,6 +49,7 @@ func main() {
 
 	// albums 엔드포인트
 	router.GET("/albums", getAlbums)
+	router.POST("/albums", postAlbums)
 
 	router.Run("localhost:8080")
 }
