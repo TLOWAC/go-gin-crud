@@ -37,6 +37,18 @@ func postAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newAlbum)
 }
 
+func getAlbumByID(c *gin.Context) {
+	id := c.Param("id") // ctx 에서 param("id") 에 접근한다. post 에서 body 를 가져올때랑은 다른 방식.
+
+	for _, a := range albums { // idx, albums[] 를 순회한다. 여기서 idx 는 불필요하여 _ 로 처리했다. 
+			if a.ID == id {
+					c.IndentedJSON(http.StatusOK, a)
+					return
+			}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+}
+
 
 func main() {
 	router := gin.Default()
@@ -49,6 +61,7 @@ func main() {
 
 	// albums 엔드포인트
 	router.GET("/albums", getAlbums)
+	router.GET("/albums/:id", getAlbumByID)
 	router.POST("/albums", postAlbums)
 
 	router.Run("localhost:8080")
