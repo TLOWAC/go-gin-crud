@@ -8,7 +8,7 @@ import (
 
 func AddBooksRoutes(rg *gin.RouterGroup) {
 	book := rg.Group("/books")
-	h, _ := handler.NewHandler()
+	h, _ := handler.NewBookServiceImpl()
 	
 	book.GET("", h.GetBooks)
 
