@@ -10,7 +10,7 @@ func AddBooksRoutes(rg *gin.RouterGroup) {
 	book := rg.Group("/books")
 	h, _ := handler.NewHandler()
 	
-	book.GET("/", h.GetBooks)
+	book.GET("", h.GetBooks)
 
 	// content.GET("/:id", h.GetContent)
 	// content.POST("", h.AddContent)
