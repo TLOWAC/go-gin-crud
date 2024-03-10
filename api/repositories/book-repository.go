@@ -12,28 +12,26 @@ type BookRepository interface {
 	// GetAllContent() ([]models.Book, error)
 }
 
+// BookRepositoryImpl 함수 작성시 DI 형태로 주입할 DB Conn 정의
+type BookRepositoryImpl struct {
+	*db.Postgresql
+}
+
 // BookRepo 인터페이스 함수 구현
-func (pg *BookORM) GetAllContents() ([]models.Book, error) {	
+func (pg *BookRepositoryImpl) GetAllContents() ([]models.Book, error) {	
 	var books []models.Book
 	err := pg.Find(&books).Error
 	return books, err
 }
 
-// BookORM 함수 작성시 DI 형태로 주입할 DB Conn 정의
-type BookORM struct {
-	*db.Postgresql
-}
-
 // DB 연결
-func NewBookORM() (*BookORM, error) {
+func NewBookRepositoryImpl() (*BookRepositoryImpl, error) {
 	pg, err := db.NewPgManager()
 
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	return &BookORM{
-		pg,
-	}, err
+	return &BookRepositoryImpl{pg}, err
 }
 
