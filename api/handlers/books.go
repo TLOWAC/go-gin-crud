@@ -12,7 +12,7 @@ type Handler struct {
 }
 
 
-type HandlerInterface interface {
+type BookHandlerInterface interface {
 	GetBooks(c *gin.Context)
 	// GetBook(c *gin.Context)
 	// AddBook(c *gin.Context)
@@ -30,8 +30,8 @@ func (h *Handler) GetBooks(c *gin.Context) {
 }
 
 
-// HandlerInterface의 생성자
-func NewHandler() (HandlerInterface, error) {
+// BookHandlerInterface 생성자
+func NewHandler() (BookHandlerInterface, error) {
 
 	db, err := repositories.NewBookORM()
 	if err != nil {
