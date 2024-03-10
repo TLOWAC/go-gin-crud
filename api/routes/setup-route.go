@@ -1,12 +1,12 @@
 package routes
 
 import (
-	bookAPI "example/web-service-gin/api/controllers"
+	"example/web-service-gin/api/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes() *gin.Engine {
+func SetupRoutes(addr string) {
     router := gin.Default()
     v1 := router.Group("/")
 
@@ -16,7 +16,7 @@ func SetupRoutes() *gin.Engine {
 		})
 	})
 
-    bookAPI.AddBooksRoutes(v1)
+    controllers.AddBooksRoutes(v1)
 		
-    return router
+    router.Run()
 }
