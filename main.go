@@ -2,17 +2,15 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+
+	"example/web-service-gin/api/routes"
 )
 
 func main() {
 	
 	router := gin.Default()
 
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-
+	routes.SetupRoutes()
+	
 	router.Run("localhost:8080")
 }
