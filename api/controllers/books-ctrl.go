@@ -1,14 +1,14 @@
 package controllers
 
 import (
-	handler "example/web-service-gin/api/handlers"
+	service "example/web-service-gin/api/services"
 
 	"github.com/gin-gonic/gin"
 )
 
 func AddBooksRoutes(rg *gin.RouterGroup) {
 	book := rg.Group("/books")
-	h, _ := handler.NewBookServiceImpl()
+	h, _ := service.NewBookServiceImpl()
 	
 	book.GET("", h.GetBooks)
 

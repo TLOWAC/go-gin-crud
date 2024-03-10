@@ -1,4 +1,4 @@
-package handler
+package service
 
 import (
 	"example/web-service-gin/api/repositories"
