@@ -1,4 +1,4 @@
-package service
+package services
 
 import (
 	"example/web-service-gin/api/models"

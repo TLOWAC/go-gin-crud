@@ -9,27 +9,27 @@ import (
 )
 
 // BooksController 인터페이스 정의
-type BooksController interface {
+type BookController interface {
 	FindAll(ctx *gin.Context)
 }
 
 // BooksController 구현체
-type BooksControllerImpl struct {
+type BookControllerImpl struct {
 	bookService service.BookService
 }
 
 // BooksController 생성자
-func NewBooksController() BooksController {
+func NewBooksController() BookController {
 	bookService, err := service.NewBookServiceImpl()
 
 	if err != nil {
 		return nil
 	}
 
-	return &BooksControllerImpl{bookService}
+	return &BookControllerImpl{bookService}
 }
 
-func (bc *BooksControllerImpl) FindAll(ctx *gin.Context) {
+func (bc *BookControllerImpl) FindAll(ctx *gin.Context) {
 	books, err := bc.bookService.GetBooks()
 
 	if err != nil {
