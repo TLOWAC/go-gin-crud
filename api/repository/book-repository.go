@@ -1,4 +1,4 @@
-package repositories
+package repository
 
 import (
 	"example/web-service-gin/api/models"

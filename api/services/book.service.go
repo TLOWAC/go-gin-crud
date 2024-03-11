@@ -2,7 +2,7 @@ package services
 
 import (
 	"example/web-service-gin/api/models"
-	"example/web-service-gin/api/repositories"
+	"example/web-service-gin/api/repository"
 )
 
 // BookService 에 정의할 함수 인터페이스 정의
@@ -16,12 +16,12 @@ type BookService interface {
 
 // BookService 구현체
 type BookServiceImpl struct {
-	bookRepository repositories.BookRepository
+	bookRepository repository.BookRepository
 }
 
 // BookService 생성자
 func NewBookServiceImpl() (BookService, error) {
-	bookRepository, err := repositories.NewBookRepositoryImpl()
+	bookRepository, err := repository.NewBookRepositoryImpl()
 
 	if err != nil {
 		return nil, err
