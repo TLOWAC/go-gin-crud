@@ -1,41 +1,42 @@
 package service
 
 import (
+	"example/web-service-gin/api/models"
 	"example/web-service-gin/api/repositories"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
 )
 
 // BookService 에 정의할 함수 인터페이스 정의
 type BookService interface {
-	GetBooks(c *gin.Context)
+	GetBooks() ([]models.Book, error) 
 	// GetBook(c *gin.Context)
 	// AddBook(c *gin.Context)
 	// UpdateBook(c *gin.Context)
 	// DeleteBook(c *gin.Context)
 }
 
+// BookService 구현체
 type BookServiceImpl struct {
 	bookRepository repositories.BookRepository
 }
 
+// BookService 생성자
 func NewBookServiceImpl() (BookService, error) {
+	bookRepository, err := repositories.NewBookRepositoryImpl()
 
-	db, err := repositories.NewBookRepositoryImpl()
 	if err != nil {
 		return nil, err
 	}
 
-	return &BookServiceImpl{bookRepository: db}, nil
+	return &BookServiceImpl{bookRepository}, nil
 }
 
 
-func (h *BookServiceImpl) GetBooks(c *gin.Context) {
-	contents, err := h.bookRepository.GetAllContents()
+func (bs *BookServiceImpl) GetBooks() ([]models.Book, error) {
+	contents, err := bs.bookRepository.GetAllContents()
+
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return nil, err
 	}
-	c.JSON(http.StatusOK, contents)
+
+	return contents, nil
 }
