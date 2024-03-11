@@ -3,12 +3,11 @@ package repositories
 import (
 	"example/web-service-gin/api/models"
 	"example/web-service-gin/internal/db"
-	"log"
 )
 
 // BookRepo 관련 함수 인터페이스 정의
 type BookRepository interface {
-	GetAllContents() ([]models.Book, error)
+	GetAllContents() ([]models.Book, error) 
 	// GetAllContent() ([]models.Book, error)
 }
 
@@ -17,21 +16,26 @@ type BookRepositoryImpl struct {
 	*db.Postgresql
 }
 
-// BookRepo 인터페이스 함수 구현
-func (pg *BookRepositoryImpl) GetAllContents() ([]models.Book, error) {	
-	var books []models.Book
-	err := pg.Find(&books).Error
-	return books, err
-}
-
 // DB 연결
 func NewBookRepositoryImpl() (*BookRepositoryImpl, error) {
 	pg, err := db.NewPgManager()
 
 	if err != nil {
-		log.Fatalln(err)
+		return nil, err
 	}
 
 	return &BookRepositoryImpl{pg}, err
 }
 
+
+// BookRepo 인터페이스 함수 구현
+func (pg *BookRepositoryImpl) GetAllContents() ([]models.Book, error) {	
+	var books []models.Book
+	err := pg.Find(&books).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return books, nil
+}
